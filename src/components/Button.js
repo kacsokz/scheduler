@@ -1,11 +1,10 @@
 import React from "react";
 
 import "components/Button.scss";
-import { render } from "@testing-library/react";
-import classNames from 'classnames/bind';
+import classnames from 'classnames/bind';
 
 export default function Button(props) {
-   const buttonClass = classNames("button", {
+   const buttonClass = classnames("button", {
       "button--confirm": props.confirm,
       "button--danger": props.danger
    });
