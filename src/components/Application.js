@@ -7,15 +7,16 @@ import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "../h
 import "components/Application.scss";
 
 export default function Application(props) {
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
-
   const setDay = day => setState({ ...state, day });
 
+  // 
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -25,7 +26,7 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    setState({ ...state, appointments});
+    setState({ ...state, appointments });
 
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(setState(prev => ({...prev, appointments})))
@@ -37,11 +38,32 @@ export default function Application(props) {
 
   };  
 
+  //
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({ ...state, appointments });
+
+    return axios.delete(`/api/appointments/${id}`, {interview})
+    .then(setState(prev => ({...prev, appointments})))
+    .catch((error) => {
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      console.log(error.response.data);
+    });
+  };
+
   // provides the appointment component with apppointments and interviewers by day
   const appointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
   const scheduleList = appointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
-    const interviewers = getInterviewersForDay(state, state.day);
     return (
       <Appointment
         key={appointment.id}
@@ -50,11 +72,12 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
 
-  // Sets initial state with data retrieved from db server
+  // sets state with data retrieved from db server
   useEffect(() => {
     Promise.all([
       Promise.resolve(axios.get("/api/days")),
