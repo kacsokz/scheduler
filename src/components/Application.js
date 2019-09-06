@@ -29,34 +29,30 @@ export default function Application(props) {
     setState({ ...state, appointments });
 
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(setState(prev => ({...prev, appointments})))
-      .catch((error) => {
-        console.log(error.response.status);
-        console.log(error.response.headers);
-        console.log(error.response.data);
-      });
-
+      .then(res => {
+          setState(prev => ({...prev, appointments}));
+          return "SHOW";
+      })
+      .catch((error) => "ERROR_SAVE");
   };  
 
   //
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    setState({ ...state, appointments });
 
     return axios.delete(`/api/appointments/${id}`, {interview})
-    .then(setState(prev => ({...prev, appointments})))
-    .catch((error) => {
-      console.log(error.response.status);
-      console.log(error.response.headers);
-      console.log(error.response.data);
-    });
+      .then(res => {
+        setState(prev => ({...prev, appointments}));
+        return "EMPTY";
+      })
+      .catch((error) => "ERROR_DELETE");
   };
 
   // provides the appointment component with apppointments and interviewers by day
