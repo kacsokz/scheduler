@@ -83,6 +83,20 @@ export default function useApplicationData() {
 
   // sets state with data retrieved from db server
   useEffect(() => {
+
+    // WebSockets
+    const ws = new WebSocket("ws://localhost:8001");
+    ws.onopen = () => ws.send("ping");
+    ws.onmessage = event => {
+      const message = JSON.parse(event.data);
+      if (message.type === SET_INTERVIEW) {
+        dispatch({ type: message.type, id: message.id, interview: message.interview });
+      }
+    };
+    // ws.onmessage = event => console.log(SET_INTERVIEW);
+
+    
+    // Fetching and setting initial state from scheduler-api
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -96,6 +110,7 @@ export default function useApplicationData() {
       console.log(err.response.headers);
       console.log(err.response.data);
     });
+
   }, []);
 
   return { state, setDay, bookInterview, cancelInterview };
