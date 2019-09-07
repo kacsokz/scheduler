@@ -83,7 +83,6 @@ export default function useApplicationData() {
 
   // sets state with data retrieved from db server
   useEffect(() => {
-
     // WebSockets
     const ws = new WebSocket("ws://localhost:8001");
     ws.onopen = () => ws.send("ping");
@@ -93,9 +92,7 @@ export default function useApplicationData() {
         dispatch({ type: message.type, id: message.id, interview: message.interview });
       }
     };
-    // ws.onmessage = event => console.log(SET_INTERVIEW);
-
-    
+ 
     // Fetching and setting initial state from scheduler-api
     Promise.all([
       axios.get("/api/days"),

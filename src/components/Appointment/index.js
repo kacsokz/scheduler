@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Empty from "components/Appointment/Empty";
@@ -47,12 +47,20 @@ export default function Appointment(props) {
     transition(EDIT);
   };
   
-  function destroy(name, interviewer) {
+  function destroy() {
     const interview = null;
     transition(DELETING, true);
     props.cancelInterview(props.id, interview)
       .then(() => transition(EMPTY));
   };
+
+  useEffect (() => {
+    if (mode === EMPTY && props.interview) {
+      transition(SHOW);
+    } else if (mode === SHOW && !props.interview) {
+      transition(EMPTY)
+    }
+  }, [mode, props.interview, transition]);
 
   return (
     <article className="appointment">
