@@ -22,19 +22,21 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
-  const { mode, transition, back, history } = useVisualMode(
+  const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
   
   function save(name, interviewer) {
-    console.log(history);
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING, true);
     props.bookInterview(props.id, interview)
-      .then((res) => transition(res, true));
+      .then(() => transition(SHOW))
+      .then(() => {
+      })
+      
   };
 
   function confirm() {
@@ -46,14 +48,10 @@ export default function Appointment(props) {
   };
   
   function destroy(name, interviewer) {
-    console.log(history);
-    const interview = {
-      student: name,
-      interviewer
-    };
+    const interview = null;
     transition(DELETING, true);
     props.cancelInterview(props.id, interview)
-      .then((res) => transition(res, true));
+      .then(() => transition(EMPTY));
   };
 
   return (
