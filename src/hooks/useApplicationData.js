@@ -67,18 +67,18 @@ export default function useApplicationData() {
 
   function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(res => {
+      .then(() => {
           dispatch({ type: SET_INTERVIEW, id, interview });
       })
-      .catch(err => "ERROR_SAVE");
+      .catch(() => "ERROR_SAVE");
   };
 
    function cancelInterview(id, interview) {
     return axios.delete(`/api/appointments/${id}`, {interview})
-      .then(res => {
+      .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview });
       })
-      .catch(err => "ERROR_DELETE");
+      .catch(() => "ERROR_DELETE");
   };
 
   // sets state with data retrieved from db server
