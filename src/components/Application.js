@@ -7,7 +7,7 @@ import "components/Application.scss";
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application() {
-
+  
   const { bookInterview, cancelInterview, setDay, state } = useApplicationData();
 
   // provides the appointment component with apppointments and interviewers by day

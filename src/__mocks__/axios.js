@@ -62,7 +62,6 @@ export default {
         data: fixtures.days
       });
     }
-
     if (url === "/api/appointments") {
       return Promise.resolve({
         status: 200,
@@ -70,7 +69,6 @@ export default {
         data: fixtures.appointments
       });
     }
-
     if (url === "/api/interviewers") {
       return Promise.resolve({
         status: 200,
@@ -78,5 +76,14 @@ export default {
         data: fixtures.interviewers
       });
     }
+  }),
+  put: jest.fn(url => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    });
+  }),
+  delete: jest.fn(url => {
+    return Promise.resolve({});
   })
 };

@@ -56,28 +56,25 @@ function reducer(state, action) {
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, 
-  {
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+    {
+      day: "Monday",
+      days: [],
+      appointments: {},
+      interviewers: {}
+    }
+  );
 
   const setDay = day => dispatch({ type: SET_DAY, day });
 
-  function bookInterview(id, interview) {
+  const bookInterview = (id, interview) => {
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(() => {
-          dispatch({ type: SET_INTERVIEW, id, interview });
-      })
+      // .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
       .catch(() => "ERROR_SAVE");
   };
 
-   function cancelInterview(id, interview) {
+   const cancelInterview = (id, interview) => {
     return axios.delete(`/api/appointments/${id}`, {interview})
-      .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview });
-      })
+      // .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
       .catch(() => "ERROR_DELETE");
   };
 
@@ -90,7 +87,7 @@ export default function useApplicationData() {
       const message = JSON.parse(event.data);
       if (message.type === SET_INTERVIEW) {
         dispatch({ type: message.type, id: message.id, interview: message.interview });
-      }
+      };
     };
  
     // Fetching and setting initial state from scheduler-api

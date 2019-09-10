@@ -26,7 +26,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
   
-  function save(name, interviewer) {
+  const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer
@@ -34,20 +34,13 @@ export default function Appointment(props) {
     transition(SAVING, true);
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .then(() => {
-      })
-      
   };
 
-  function confirm() {
-    transition(CONFIRM);
-  };
+  const confirm = () => transition(CONFIRM);
 
-  function edit() {
-    transition(EDIT);
-  };
+  const edit = () => transition(EDIT);
   
-  function destroy() {
+  const destroy = () => {
     const interview = null;
     transition(DELETING, true);
     props.cancelInterview(props.id, interview)
@@ -63,7 +56,7 @@ export default function Appointment(props) {
   }, [mode, props.interview, transition]);
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => (transition(CREATE))} />}
       {mode === SHOW && props.interview && (
