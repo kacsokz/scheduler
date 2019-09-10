@@ -5,7 +5,6 @@ const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
-
 function reducer(state, action) {
   switch (action.type) {
     case SET_DAY:
@@ -27,7 +26,7 @@ function reducer(state, action) {
         };
         if (!state.appointments[action.id].interview) {
           const selectedDay = state.days.find(item => item.name === state.day);
-          selectedDay.spots--;
+          return { ...state, appointments, day: selectedDay.spots-- };
         }
         
       // cancelling an interview
@@ -41,18 +40,17 @@ function reducer(state, action) {
           [action.id]: appointment
         };
         const selectedDay = state.days.find(item => item.name === state.day);
-        selectedDay.spots++;
+        return { ...state, appointments, day: selectedDay.spots++ };
       }
-
-      return { ...state, appointments }
+      break;
     }
-    default:
+    default: {
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
-      );
+      )
+    }
   }
 };
-
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, 
