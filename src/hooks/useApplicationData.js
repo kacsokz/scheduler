@@ -6,6 +6,7 @@ const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
 function reducer(state, action) {
+  
   switch (action.type) {
     case SET_DAY:
       return { ...state, day: action.day }
@@ -13,43 +14,34 @@ function reducer(state, action) {
       return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers  }
     case SET_INTERVIEW: {
       let appointments = {};
-
-      // booking an interview
-      if (action.interview) {
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: { ...action.interview }
-        };
-        appointments = {
-          ...state.appointments,
-          [action.id]: appointment
-        };
-        if (!state.appointments[action.id].interview) {
-          const selectedDay = state.days.find(item => item.name === state.day);
-          return { ...state, appointments, day: selectedDay.spots-- };
-        }
-        
-      // cancelling an interview
-      } else {
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: null
-        };
-        appointments = {
-          ...state.appointments,
-          [action.id]: appointment
-        };
-        const selectedDay = state.days.find(item => item.name === state.day);
-        return { ...state, appointments, day: selectedDay.spots++ };
+      const appointment = {
+        ...state.appointments[action.id],
+        interview: action.interview && { ...action.interview }
+      };
+      appointments = {
+        ...state.appointments,
+        [action.id]: appointment
+      };
+      const days = state.days.map(day => {
+    
+          if (day.appointments.includes(action.id)) {
+            const sumDays = day.appointments.reduce((acc, currVal) => {
+              return (appointments[currVal].interview) ? acc + 1 : acc;
+            }, 0);
+            const remainingDays = day.appointments.length - sumDays;
+            return { ...day, spots: remainingDays };
+          } else {
+            return { ...day };
+          }
+      });
+      return { ...state, appointments, days };
       }
-      break;
+      default: {
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        )
+      }
     }
-    default: {
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      )
-    }
-  }
 };
 
 export default function useApplicationData() {
