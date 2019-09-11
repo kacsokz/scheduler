@@ -128,12 +128,4 @@ describe("Application", () => {
     axios.put.mockRejectedValueOnce();
   });
 
-  xit("shows the save error when failing to save an appointment", () => {
-
-  });
-
-  xit("shows the delete error when failing to delete an existing appointment", () => {
-
-  });
-  
 });
