@@ -9,7 +9,6 @@ import useApplicationData from "hooks/useApplicationData";
 export default function Application() {
   
   const { bookInterview, cancelInterview, setDay, state } = useApplicationData();
-  console.log("in Application", state);
   // provides the appointment component with apppointments and interviewers by day
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
