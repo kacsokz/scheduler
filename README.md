@@ -6,10 +6,14 @@ Project by Casey Sokach, while enrolled with Lighthouse Labs Web Development Sep
 
 ## Final Product
 
-["Scheduler Layout"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_home.png)
-["Edit Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_edit.png)
-["Confirm Delete Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_confirm_delete.png)
-["Empty Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_empty_appointment.png)
+### Scheduler Layout
+!["Scheduler Layout"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_home.png)
+### Edit Appointment
+!["Edit Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_edit.png)
+### Confirm Delete Appointment
+!["Confirm Delete Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_confirm_delete.png)
+### Empty Appointment
+!["Empty Appointment"](https://github.com/kacsokz/scheduler/blob/master/public/docs/scheduler_empty_appointment.png)
 
 ## Setup
 
